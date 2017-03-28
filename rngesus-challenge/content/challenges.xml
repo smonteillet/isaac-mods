@@ -1,8 +1,0 @@
-<challenges version="1">
-	<!-- Interesting items for the challenge
-	 * Item 258: Missing No (mandatory)
-	 * Item 284: D4
-	 * Item 127: Forget Me Now
-	 * Item 402: Chaos -->
-	<challenge name="RNGesus" id="41" endstage="11" difficulty="1" playertype="10" startingitems="258" />
-</challenges>

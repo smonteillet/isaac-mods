@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Sacrificial sacrifice challenge</name>
+    <directory>sacrificial-sacrifice-challenge</directory>
+    <id>893481675</id>
+    <description>== Custom Challenge ==
+
+Start as blindfolded Lost with Sacrificial Dagger and BFF.
+
+    </description>
+    <version>1.1</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Challenges"/>
+</metadata>

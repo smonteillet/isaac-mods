@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Mistery Eden challenge</name>
+    <directory>mistery-eden-challenge</directory>
+    <id>893479507</id>
+    <description>== Custom Challenge ==
+
+Start as Eden with Missing No and Chaos. You have to go to the chest and pray that the RNG Gods are by your side.
+
+    </description>
+    <version>1.1</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Challenges"/>
+</metadata>

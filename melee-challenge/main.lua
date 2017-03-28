@@ -1,1 +1,0 @@
-local rngesusChallenge = RegisterMod("MeleeChallenge",1); --Registers the mod under the name MeleeChallenge

@@ -1,5 +1,0 @@
-<challenges version="1">
-	<!-- Item 172 : Sacrificial Dagger-->
-	<!-- Item 247 : BFFS !-->
-	<challenge name="Melee" id="42" endstage="8" difficulty="1" playertype="10" canshoot="false" startingitems="172,247" />
-</challenges>
