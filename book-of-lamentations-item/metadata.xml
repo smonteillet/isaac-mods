@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Book of lamentations item</name>
+    <directory>book-of-lamentation-item</directory>
+    <id>1</id>
+    <description>== New Item ==
+
+TODO
+
+    </description>
+    <version>1.0</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Challenges"/>
+</metadata>
