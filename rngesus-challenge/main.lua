@@ -1,0 +1,1 @@
+local rngesusChallenge = RegisterMod("RngesusChallenge",1); --Registers the mod under the name RngesusChallenge
