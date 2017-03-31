@@ -1,28 +1,41 @@
-local bookMod = RegisterMod("BookOfLamentations",1)
-local bookItem = Isaac.GetItemIdByName("Book of lamentations")
 
-bookMod.debug=false
-bookMod.debugStr="Init"
+local mod = RegisterMod("BookOfLamentations",1)
 
-function bookMod:useBook()
+local bookOfLamentations = {
+	itemID = Isaac.GetItemIdByName("Book of lamentations");
+	isActive = false;
+}
+
+
+function mod:useItem(CollectibleType, RNG)
 	local player = Isaac.GetPlayer(0)
-   	player:AddCacheflag(CacheFlag.CACHE_FIREDELAY)
+	player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
 	player:EvaluateItems()
+	bookOfLamentations.isActive = true;
 	return true
 end
 
-function bookMod:updateStats()
-	if cacheFlag == CacheFlags.CACHE_FIREDELAY then
-        player.MaxFireDelay = player.MaxFireDelay - 3
-    end
-end
-
-function mod:debug()
-	if bookMod.debug then
-		Isaac.RenderText(bookMod.debugStr, 50, 15, 255, 255, 255, 255)
+function mod:evaluateCache(player, cacheFlag)
+	if cacheFlag == CacheFlag.CACHE_FIREDELAY and
+	   player:HasCollectible(bookOfLamentations.itemID) and
+		 bookOfLamentations.isActive then
+		player.MaxFireDelay = player.MaxFireDelay - 3;
 	end
 end
 
-bookMod:AddCallback(ModCallbacks.MC_POST_UPDATE, bookMod.debug)
-bookMod:AddCallback(ModCallbacks.MC_USE_ITEM, bookMod.useBook, bookItem)
-bookMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, bookMod.updateStats)
+function mod:postUpdate()
+	if mod:hasPlayerJustEnterARoom() and bookOfLamentations.isActive then
+    bookOfLamentations.isActive = false;
+    local player = Isaac.GetPlayer(0);
+    player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY);
+    player:EvaluateItems();
+  end
+end
+
+function mod:hasPlayerJustEnterARoom()
+	return Game():GetRoom():GetFrameCount() == 1
+end
+
+mod:AddCallback(ModCallbacks.MC_POST_UPDATE, mod.postUpdate)
+mod:AddCallback(ModCallbacks.MC_USE_ITEM, mod.useItem, bookItem)
+mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, mod.evaluateCache)
