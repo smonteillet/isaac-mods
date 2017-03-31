@@ -1,17 +1,18 @@
-
 local mod = RegisterMod("BookOfLamentations",1)
 
 local bookOfLamentations = {
 	itemID = Isaac.GetItemIdByName("Book of lamentations");
 	isActive = false;
-	debugStr="nothing"
+	debugStr="nothing";
+	TEAR_DELAY_HARD_CAP = 5;
+	TEAR_DELAY_TO_REMOVE_BY_ITEM_USE = 3;
 }
 
 
 function mod:useItem(CollectibleType, RNG)
 	bookOfLamentations.debugStr="1"
+	local player = Isaac.GetPlayer(0)
 	if player:HasCollectible(bookOfLamentations.itemID) then
-		local player = Isaac.GetPlayer(0)
 		player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
 		player:EvaluateItems()
 		bookOfLamentations.isActive = true
@@ -44,14 +45,19 @@ function mod:replaceDevilDealByAngelDealIfPossible(stage)
 end
 
 function mod:evaluateCache(player, cacheFlag)
-	if cacheFlag == CacheFlag.CACHE_FIREDELAY and
-	   player:HasCollectible(bookOfLamentations.itemID) and
-	   bookOfLamentations.isActive then
-		player.MaxFireDelay = player.MaxFireDelay - 3;
+	if cacheFlag == CacheFlag.CACHE_FIREDELAY and player:HasCollectible(bookOfLamentations.itemID) and bookOfLamentations.isActive then
+		local playerMaxFireDelay = player.MaxFireDelay - bookOfLamentations.TEAR_DELAY_TO_REMOVE_BY_ITEM_USE
+		if playerMaxFireDelay < bookOfLamentations.TEAR_DELAY_HARD_CAP then
+			playerMaxFireDelay = bookOfLamentations.TEAR_DELAY_HARD_CAP
+		end
+		player.MaxFireDelay = playerMaxFireDelay
 	end
 end
 
 function mod:postUpdate()
+	if mod:hasPlayerJustEnterARoom() then
+		bookOfLamentations.debugStr="0"
+	end
 	Isaac.RenderText("DebugStr: "..bookOfLamentations.debugStr, 50, 30, 255, 255, 255, 255)
 	if mod:hasPlayerJustEnterARoom() and bookOfLamentations.isActive then
 		bookOfLamentations.isActive = false;
