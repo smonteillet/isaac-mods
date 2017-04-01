@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-    <name>Book of lamentations item</name>
+    <name>Book of lamentations</name>
     <directory>book-of-lamentation-item</directory>
     <id>1</id>
     <description>== New Item ==
 
-TODO
+Upon use, book of lamentations gives you a tears up  which lasts for the current room. When triggered during boss fight, it will replace devil deals appearance by angel rooms.
+
+Type: active
+Recharge Time: 3 ROOMS
+Item pool: treasure, angel, library
+
 
     </description>
     <version>1.0</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
-    <tag id="Challenges"/>
+    <tag id="Items"/>
+    <tag id="Active Items"/>
 </metadata>

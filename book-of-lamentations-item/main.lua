@@ -1,47 +1,56 @@
 local mod = RegisterMod("BookOfLamentations",1)
 
+
+local stagesWithPossibleDevilDeals = {
+	[LevelStage.STAGE1_2] = true,
+	[LevelStage.STAGE2_1] = true,
+	[LevelStage.STAGE2_2] = true,
+	[LevelStage.STAGE3_1] = true,
+	[LevelStage.STAGE3_2] = true,
+	[LevelStage.STAGE4_1] = true,
+	[LevelStage.STAGE4_2] = true
+}
+
+local greedModeStagesWithPossibleDevilDeals = {
+	[LevelStage.STAGE1_GREED] = true,
+	[LevelStage.STAGE2_GREED] = true,
+	[LevelStage.STAGE3_GREED] = true,
+	[LevelStage.STAGE4_GREED] = true,
+	[LevelStage.STAGE5_GREED] = true,
+	[LevelStage.STAGE6_GREED] = true
+}
+
 local bookOfLamentations = {
 	itemID = Isaac.GetItemIdByName("Book of lamentations");
 	isActive = false;
-	debugStr="nothing";
 	TEAR_DELAY_HARD_CAP = 5;
 	TEAR_DELAY_TO_REMOVE_BY_ITEM_USE = 3;
+	debug = false,
+	debugStr = "debug"
 }
 
 
 function mod:useItem(CollectibleType, RNG)
-	bookOfLamentations.debugStr="1"
 	local player = Isaac.GetPlayer(0)
 	if player:HasCollectible(bookOfLamentations.itemID) then
 		player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
 		player:EvaluateItems()
 		bookOfLamentations.isActive = true
-		bookOfLamentations.debugStr="2"
-		if mod:replaceDevilDealByAngelDealIfPossible() then
+		if mod:canRoomHaveDevilDealSpawn() then
 			Game():GetLevel():AddAngelRoomChance(1.0)
 		end
 	end
 	return true
 end
 
-function mod:replaceDevilDealByAngelDealIfPossible(stage)
+function mod:canRoomHaveDevilDealSpawn(stage)
 	local stage = Game():GetLevel():GetStage()
 	local isBossFight = Game():GetRoom():IsCurrentRoomLastBoss()
-	return isBossFight and (
-		stage == LevelStage.STAGE1_2 or
-		stage == LevelStage.STAGE2_1 or
-		stage == LevelStage.STAGE2_2 or
-		stage == LevelStage.STAGE3_1 or
-		stage == LevelStage.STAGE3_2 or
-		stage == LevelStage.STAGE4_1 or
-		stage == LevelStage.STAGE4_2 or
-		stage == LevelStage.STAGE1_GREED or
-		stage == LevelStage.STAGE2_GREED or
-		stage == LevelStage.STAGE3_GREED or
-		stage == LevelStage.STAGE4_GREED or
-		stage == LevelStage.STAGE5_GREED or
-		stage == LevelStage.STAGE6_GREED
-	)
+	local stageCanHaveDevilDeal = stagesWithPossibleDevilDeals[stage]
+	if Game():IsGreedMode() then
+		stageCanHaveDevilDeal = greedModeStagesWithPossibleDevilDeals[stage]
+	end
+	return isBossFight and stageCanHaveDevilDeal
 end
 
 function mod:evaluateCache(player, cacheFlag)
@@ -55,10 +64,9 @@ function mod:evaluateCache(player, cacheFlag)
 end
 
 function mod:postUpdate()
-	if mod:hasPlayerJustEnterARoom() then
-		bookOfLamentations.debugStr="0"
+	if debug then
+		Isaac.RenderText("DebugStr: "..debugStr, 50, 30, 255, 255, 255, 255)
 	end
-	Isaac.RenderText("DebugStr: "..bookOfLamentations.debugStr, 50, 30, 255, 255, 255, 255)
 	if mod:hasPlayerJustEnterARoom() and bookOfLamentations.isActive then
 		bookOfLamentations.isActive = false;
 		local player = Isaac.GetPlayer(0);

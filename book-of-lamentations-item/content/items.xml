@@ -1,3 +1,3 @@
 <items gfxroot="gfx/items/" version="1">
-	<active name="Book of lamentations" description="Cry little boy !" maxcharges="3" gfx="collectibles_bookoflamentations.png"/>
+	<active  cache="firedelay" name="Book of lamentations" description="Cry little boy !" maxcharges="3" gfx="collectibles_bookoflamentations.png"/>
 </items>
